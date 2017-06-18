@@ -7,9 +7,9 @@ hanxiong@bu.edu
 import random
 import time
 
-print "\nCS566 - Programming Assignment 1"
-print "Hanxiong Shi"
-print "hanxiong@bu.edu\n"
+print("\nCS566 - Programming Assignment 1")
+print("Hanxiong Shi")
+print("hanxiong@bu.edu\n")
 
 
 def print_array(array, num):
@@ -17,7 +17,7 @@ def print_array(array, num):
     Print the first n elements of an array
     """
     for i in range(0, num):
-        print array[i]
+        print(array[i])
 
 
 def read_integers(filename):
@@ -47,7 +47,7 @@ def build_max_heap(array):
     """
     Build a max heap
     """
-    for i in range((len(array) / 2) - 1, -1, -1):
+    for i in range((int)(len(array) / 2) - 1, -1, -1):
         max_heapify(array, i)
 
 
@@ -84,7 +84,9 @@ def build_max_heap_analysis(array):
         elapsed_time = end_time - start_time
         total_elapsed_time += elapsed_time
     average_elapsed_time = total_elapsed_time / 10 * 1000
-    print "For ", len(array), " elements, the average elapsed time is ", average_elapsed_time
+    print("\nFor ", len(array), " elements, the average elapsed time is ", average_elapsed_time)
+    print("First 15 elements")
+    print_array(array, 15)
 
 build_max_heap_analysis(F_10000)
 build_max_heap_analysis(F_20000)
@@ -99,4 +101,3 @@ build_max_heap_analysis(F_100000)
 """
 print_array(F_10000, 15)
 """
-
