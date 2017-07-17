@@ -4,7 +4,9 @@ Hanxiong Shi
 hanxiong@bu.edu
 """
 
+
 import re
+
 
 """
 This file contains common functions that are being used by both algorithms
@@ -38,13 +40,13 @@ def read_graph_input():
             items = re.findall('(\w+)', line)
             rowname = items[0]
             for idx, item in enumerate(items[1:]):
-                map[headers[idx]][rowname] = item
+                map[headers[idx]][rowname] = int(item)
     return map
 
 
 def read_user_input():
     """
-    read user input, re-try when input is invalid.
+    Read user input, re-try when input is invalid.
     """
     node = input("Please enter a node: ")
     if len(node) == 1 and node.isalpha():
@@ -54,3 +56,55 @@ def read_user_input():
     else:
         print("The input is invalid, please try again.")
         read_user_input()
+
+
+def is_connected(graph_map, node_a, node_b):
+    """
+    Check if two nodes (node_a, node_b) are connected in the given graph map.
+    """
+    if graph_map[node_a][node_b] != 0:
+        return True
+    else:
+        return False
+
+
+def find_adjacent_nodes(graph_map, node):
+    """
+    Look through the map graph and return a list of all the adjacent nodes
+    """
+    adjacent_nodes = []
+    for n in graph_map[node]:
+        if is_connected(graph_map, node, n):
+            adjacent_nodes.append(n)
+    return adjacent_nodes
+
+
+def print_shortest_path(path):
+    """
+    Print out the shortest path direction.
+    """
+    path_map = "Shortest path: " + str(path[0])
+    for p in path[1:]:
+        path_map = str(path_map) + " -> " + str(p)
+    print(path_map)
+    return
+
+
+def print_shortest_path_length(graph_map, path):
+    """
+    Print out the length of the shortest path and sum value
+    """
+    sum = 0
+    distance_num = ""
+    for p in range(1, len(path), 1):
+        distance = graph_map[path[p - 1]][path[p]]
+        distance_num = distance_num + str(distance)
+        print("current p is", p)
+        if p != len(path) - 1:
+            distance_num = distance_num + " + "
+        else:
+            distance_num = distance_num + " = "
+        sum = sum + distance
+    print("Shortest path length = " + distance_num + str(sum))
+    return
+

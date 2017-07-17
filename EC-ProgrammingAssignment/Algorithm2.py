@@ -4,7 +4,15 @@ Hanxiong Shi
 hanxiong@bu.edu
 """
 
-from common import read_direct_distance, read_user_input, read_graph_input
+
+from common import read_direct_distance, read_user_input, read_graph_input, is_connected, find_adjacent_nodes, print_shortest_path
+
+
+"""
+Algorithm2: Among all nodes v that are adjacent to the node n,
+choose the one for which w(n, v) + dd(v) is the smallest.
+"""
+
 
 print("\nCS566 - EC Programming Assignment")
 print("Hanxiong Shi")
