@@ -5,7 +5,7 @@ hanxiong@bu.edu
 """
 
 
-from common import read_direct_distance, read_user_input, read_graph_input, is_connected, find_adjacent_nodes, print_shortest_path
+from common import read_direct_distance, read_user_input, read_graph_input, is_connected, find_adjacent_nodes, print_shortest_path, print_shortest_path_length
 
 
 """

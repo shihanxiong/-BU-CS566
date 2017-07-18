@@ -99,7 +99,6 @@ def print_shortest_path_length(graph_map, path):
     for p in range(1, len(path), 1):
         distance = graph_map[path[p - 1]][path[p]]
         distance_num = distance_num + str(distance)
-        print("current p is", p)
         if p != len(path) - 1:
             distance_num = distance_num + " + "
         else:

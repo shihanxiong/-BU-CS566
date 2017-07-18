@@ -5,7 +5,7 @@ hanxiong@bu.edu
 """
 
 
-from common import read_direct_distance, read_user_input, read_graph_input, is_connected, find_adjacent_nodes, print_shortest_path
+from common import read_direct_distance, read_user_input, read_graph_input, is_connected, find_adjacent_nodes, print_shortest_path, print_shortest_path_length
 
 
 """
@@ -67,6 +67,10 @@ def algorithm_1(node):
     # Check if the shortest node is destination node
     if shortest_node == 'Z':
         print("Z is the destination node. Stop.")
+        # Add Z to the path map
+        path_map.append('Z')
+        print_shortest_path(path_map)
+        print_shortest_path_length(GRAPH_INPUT, path_map)
         return
     else:
         print(shortest_node, "is selected.")
