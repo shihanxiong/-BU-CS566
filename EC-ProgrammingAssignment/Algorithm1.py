@@ -5,7 +5,7 @@ hanxiong@bu.edu
 """
 
 
-from common import read_direct_distance, read_user_input, read_graph_input, is_connected, find_adjacent_nodes, print_shortest_path, print_shortest_path_length
+from common import read_direct_distance, read_user_input, read_graph_input, is_connected, find_adjacent_unvisited_nodes, print_shortest_path, print_shortest_path_length
 
 
 """
@@ -26,10 +26,13 @@ DIRECT_DISTANCE_MAP = read_direct_distance()
 GRAPH_INPUT = read_graph_input()
 # Read user input (starting node)
 USER_INPUT_NODE = read_user_input()
-# Create a path map to keep track all nodes that visited
+# Create a path map to keep track of the final shortest path
 # Add the user input node as the 1st node in path map
 path_map = []
 path_map.append(USER_INPUT_NODE)
+# Create an array to keep track of all nodes that are visited
+visited_nodes = []
+visited_nodes.append(USER_INPUT_NODE)
 
 
 def print_direct_distance(direct_distance_map, nodes_list):
@@ -37,31 +40,51 @@ def print_direct_distance(direct_distance_map, nodes_list):
     Print all adjacent nodes' direct distance,
     then return the shortest node.
     """
-    shortest_node = nodes_list[0]
-    shortest_distance = direct_distance_map[shortest_node]
-    for n in nodes_list:
-        print(n, ": dd(", n, ") = ", direct_distance_map[n])
-        # Check if the node has the shortest direct distance
-        if direct_distance_map[n] < shortest_distance:
-            shortest_distance = direct_distance_map[n]
-            shortest_node = n
-    return shortest_node
+    if len(nodes_list) != 0:
+        shortest_node = nodes_list[0]
+        shortest_distance = direct_distance_map[shortest_node]
+        for n in nodes_list:
+            print(n, ": dd(", n, ") = ", direct_distance_map[n])
+            # Check if the node has the shortest direct distance
+            if direct_distance_map[n] < shortest_distance:
+                shortest_distance = direct_distance_map[n]
+                shortest_node = n
+        return shortest_node
+    else:
+        return None
 
 
 def algorithm_1(node):
     """
     Algorithm 1
     """
+    if node == 'Z':
+        print("Z is the destination node. Stop.")
+        return
+    
     # Print current node
     print("\nCurrent node = ", node)
     # Find adjacent nodes
-    adjacent_nodes = find_adjacent_nodes(GRAPH_INPUT, node)
+    adjacent_nodes = find_adjacent_unvisited_nodes(
+        GRAPH_INPUT, node, visited_nodes)
     print("Adjacent nodes = ", adjacent_nodes)
     # Filter out the adjacent nodes that are already in the path
     for n in adjacent_nodes:
         if n in path_map:
             print(n, "is already in the path.")
             adjacent_nodes.remove(n)
+
+    # When adjacent_nodes is empty -> dead end
+    if len(adjacent_nodes) == 0:
+        print("Dead end.")
+        # Find the node to track back to
+        back_track_to_node = visited_nodes[len(visited_nodes) - 2]
+        print("Backtrack to", back_track_to_node)
+        # Remove the node from the path map
+        path_map.remove(node)
+        # Continue
+        algorithm_1(back_track_to_node)
+
     # Loop through adjacent nodes and print out direct distance
     shortest_node = print_direct_distance(DIRECT_DISTANCE_MAP, adjacent_nodes)
     # Check if the shortest node is destination node
@@ -72,14 +95,18 @@ def algorithm_1(node):
         print_shortest_path(path_map)
         print_shortest_path_length(GRAPH_INPUT, path_map)
         return
+    # If there's no more adjacent nodes, terminate
+    elif shortest_node == None:
+        return
     else:
         print(shortest_node, "is selected.")
         # Add shortest_node to the path map
         path_map.append(shortest_node)
+        # Add shortest_node to the visited nodes map
+        visited_nodes.append(shortest_node)
         # Print the shortest path
         print_shortest_path(path_map)
         algorithm_1(shortest_node)
-
 
 # Init shortest path calculation
 algorithm_1(USER_INPUT_NODE)

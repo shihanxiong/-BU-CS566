@@ -55,7 +55,7 @@ def read_user_input():
         return node
     else:
         print("The input is invalid, please try again.")
-        read_user_input()
+        return read_user_input()
 
 
 def is_connected(graph_map, node_a, node_b):
@@ -68,13 +68,14 @@ def is_connected(graph_map, node_a, node_b):
         return False
 
 
-def find_adjacent_nodes(graph_map, node):
+def find_adjacent_unvisited_nodes(graph_map, node, visited_nodes):
     """
     Look through the map graph and return a list of all the adjacent nodes
+    that have not been visited.
     """
     adjacent_nodes = []
     for n in graph_map[node]:
-        if is_connected(graph_map, node, n):
+        if is_connected(graph_map, node, n) and n not in visited_nodes:
             adjacent_nodes.append(n)
     return adjacent_nodes
 
