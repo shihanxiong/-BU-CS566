@@ -44,10 +44,12 @@ def print_weighted_distance(graph_map, direct_distance_map, current_node, nodes_
         shortest_distance = graph_map[current_node][shortest_node] + \
             direct_distance_map[shortest_node]
         for n in nodes_list:
-            print(n, ": w(", current_node, ",", n, ") + dd(", n, ") = ", graph_map[current_node][n], "+", direct_distance_map[n], "=", graph_map[current_node][n] + direct_distance_map[n])
+            print(n, ": w(", current_node, ",", n, ") + dd(", n, ") = ",
+                  graph_map[current_node][n], "+", direct_distance_map[n], "=", graph_map[current_node][n] + direct_distance_map[n])
             # Check if the node has the shortest direct distance
             if graph_map[current_node][n] + direct_distance_map[n] < shortest_distance:
-                shortest_distance = graph_map[current_node][n] + direct_distance_map[n]
+                shortest_distance = graph_map[current_node][n] + \
+                    direct_distance_map[n]
                 shortest_node = n
         return shortest_node
     else:
